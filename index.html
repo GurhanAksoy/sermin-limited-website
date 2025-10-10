@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sermin Limited - International Trade & Supply Services</title>
+  <style>
+    :root{
+      --bg:#000; --bg-2:#0a0a0a;
+      --panel-1:#151515; --panel-2:#0f0f0f;
+      --text:#fff; --muted:#b5b5b5; --line:#242424;
+      --accent:#b77aff; --accent-2:#9d5fff;
+      --gold:#ffd166; --gold-2:#f6ae2d;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+    .container{max-width:1200px;margin:0 auto;padding:0 20px}
+
+    /* HEADER */
+    header{background:#000;padding:20px 0;position:fixed;width:100%;top:0;z-index:1000;border-bottom:1px solid var(--line)}
+    nav{display:flex;justify-content:center;align-items:center;position:relative}
+    .logo-img{height:200px;width:auto;display:block;object-fit:contain}
+    .lang-switch{position:absolute;right:20px;display:flex;gap:10px;align-items:center}
+    .lang-btn{background:transparent;border:1px solid #4a4a4a;color:#9a9a9a;padding:8px 16px;cursor:pointer;transition:.25s;font-size:14px;border-radius:20px}
+    .lang-btn.active{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-2) 100%);border-color:var(--gold);color:#000;font-weight:600;box-shadow:0 10px 30px rgba(255,209,102,.28)}
+    .lang-btn:hover{border-color:var(--gold);color:#e5e5e5}
+
+    /* HERO */
+    .hero{margin-top:80px;padding:120px 0;text-align:center;background:#000 !important;position:relative;overflow:hidden}
+    .hero::before{display:none !important;}
+    .hero-content{position:relative;z-index:1;top:35px;} /* hero biraz aşağıda */
+    .hero h1{font-size:48px;margin-bottom:24px;font-weight:700;letter-spacing:-1px;color:var(--accent)!important;background:none!important;-webkit-text-fill-color:var(--accent)!important;}
+    .hero p{font-size:20px;color:var(--muted);margin-bottom:40px;max-width:800px;margin-left:auto;margin-right:auto;line-height:1.6}
+
+    .cta-btn{
+      background:linear-gradient(135deg,var(--gold) 0%,var(--gold-2) 100%);
+      color:#000;padding:16px 40px;border:none;border-radius:10px;font-size:18px;cursor:pointer;transition:.25s;
+      text-decoration:none;display:inline-block;font-weight:700;
+      box-shadow:0 10px 30px rgba(255,209,102,.32)
+    }
+    .cta-btn:hover{transform:translateY(-2px);box-shadow:0 18px 42px rgba(255,209,102,.45)}
+
+    /* SECTIONS */
+    .services{padding:100px 0;background:var(--bg-2)}
+    .section-title{text-align:center;font-size:40px;margin-bottom:70px;font-weight:700;letter-spacing:-1px;color:var(--accent)!important;background:none!important;-webkit-text-fill-color:var(--accent)!important;position:relative;}
+    .section-title::after{content:'';position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);width:84px;height:3px;background:linear-gradient(90deg,transparent,var(--accent),transparent);border-radius:3px;}
+
+    .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px}
+    .service-card{background:linear-gradient(135deg,var(--panel-1) 0%,var(--panel-2) 100%);padding:40px;border-radius:14px;border:1px solid rgba(255,255,255,0.08);transition:.25s}
+    .service-card:hover{transform:translateY(-6px);border-color:#3a3a3a;box-shadow:0 12px 34px rgba(0,0,0,.45)}
+    .service-card h3{font-size:24px;margin-bottom:15px;background:linear-gradient(135deg,var(--accent) 0%,var(--accent-2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;color:transparent;font-weight:600}
+    .service-card p{color:var(--muted);line-height:1.6}
+
+    .about{padding:100px 0;background:#000}
+    .about-content{max-width:900px;margin:0 auto;text-align:center}
+    .about-content p{font-size:18px;color:#c7c7c7;line-height:1.8;margin-bottom:20px}
+
+    .contact{padding:100px 0;background:var(--bg-2)}
+    .contact-content{max-width:600px;margin:0 auto}
+    .contact-form{display:flex;flex-direction:column;gap:20px}
+    .form-group{display:flex;flex-direction:column}
+    .form-group label{margin-bottom:8px;color:#a5a5a5}
+    .form-group input,.form-group textarea{padding:12px;background:#111;border:1px solid #2a2a2a;border-radius:10px;color:#fff;font-size:16px}
+    .form-group input:focus,.form-group textarea:focus{outline:none;border-color:#3f3f3f;box-shadow:0 0 0 3px rgba(183,122,255,.15)}
+    .form-group textarea{min-height:150px;resize:vertical}
+
+    /* FOOTER */
+    footer{background:#000;padding:60px 0;text-align:center;border-top:1px solid var(--line)}
+    .footer-content{color:#9a9a9a;font-size:16px}
+    .footer-content p{margin:12px 0}
+    .footer-content strong{background:linear-gradient(135deg,#d4af37 0%,#f4d03f 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:22px;letter-spacing:1.5px;display:inline-block}
+    .company-number{color:var(--accent);font-weight:bold}
+    .footer-address{color:#7a7a7a;margin-top:8px}
+    .footer-email{color:var(--accent-2);text-decoration:none}
+    .footer-email:hover{color:var(--accent)}
+    .footer-copyright{margin-top:30px;color:#666;font-size:14px;padding-top:20px;border-top:1px solid #1a1a1a}
+
+    /* MOBİL AYARLAR */
+    @media (max-width:768px){
+      .hero h1{font-size:32px !important;}
+      .hero p{font-size:16px}
+      .section-title{font-size:28px !important;}
+      .services-grid{grid-template-columns:1fr}
+      .logo-img{height:120px !important;width:auto;}
+      .hero{margin-top:140px !important;}
+      .hero-content{top:20px !important;}
+      nav{flex-direction:column;gap:10px !important;}
+      .lang-switch{position:static}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="container">
+      <img src="Sermin Limited Logo.png" alt="Sermin Limited" class="logo-img"/>
+      <div class="lang-switch">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="tr">TR</button>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content container">
+      <h1 data-en="International Trade and Supply Services" data-tr="Uluslararası Ticaret ve Tedarik Hizmetleri">International Trade and Supply Services</h1>
+      <p data-en="We source, supply and trade products globally through our UK-based operations and e-commerce channels" data-tr="İngiltere merkezli operasyonlarımız ve e-ticaret kanallarımız ile küresel ürün tedariki ve ticareti yapıyoruz">We source, supply and trade products globally through our UK-based operations and e-commerce channels</p>
+      <a href="#contact" class="cta-btn" data-en="Contact Us" data-tr="İletişime Geçin">Contact Us</a>
+    </div>
+  </section>
+
+  <section class="services">
+    <div class="container">
+      <h2 class="section-title" data-en="Our Services" data-tr="Hizmetlerimiz">Our Services</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <h3 data-en="Product Sourcing and Trade" data-tr="Ürün Tedarik ve Ticaret">Product Sourcing and Trade</h3>
+          <p data-en="We source quality products from verified suppliers and manage international trade operations across multiple markets" data-tr="Doğrulanmış tedarikçilerden kaliteli ürünler temin ediyor ve birden fazla pazarda uluslararası ticaret operasyonlarını yürütüyoruz">We source quality products from verified suppliers and manage international trade operations across multiple markets</p>
+        </div>
+        <div class="service-card">
+          <h3 data-en="E-Commerce Operations" data-tr="E-Ticaret Operasyonları">E-Commerce Operations</h3>
+          <p data-en="We operate our own online sales channels and manage end-to-end processes from product listing to order fulfillment" data-tr="Kendi online satış kanallarımızı işletiyor, ürün listelenmesinden sipariş teslimine kadar tüm süreçleri yönetiyoruz">We operate our own online sales channels and manage end-to-end processes from product listing to order fulfillment</p>
+        </div>
+        <div class="service-card">
+          <h3 data-en="International Trade Solutions" data-tr="Uluslararası Ticaret Çözümleri">International Trade Solutions</h3>
+          <p data-en="We provide supplier connections, market insights and trade support services to businesses expanding their global operations" data-tr="Küresel operasyonlarını genişleten işletmelere tedarikçi bağlantıları, pazar bilgileri ve ticaret destek hizmetleri sunuyoruz">We provide supplier connections, market insights and trade support services to businesses expanding their global operations</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about">
+    <div class="container">
+      <h2 class="section-title" data-en="About Us" data-tr="Hakkımızda">About Us</h2>
+      <div class="about-content">
+        <p data-en="Sermin Limited is a UK-based company specialising in international trade and supply services across multiple markets." data-tr="Sermin Limited, birden fazla pazarda uluslararası ticaret ve tedarik hizmetleri konusunda uzmanlaşmış, İngiltere merkezli bir şirkettir.">Sermin Limited is a UK-based company specialising in international trade and supply services across multiple markets.</p>
+        <p data-en="Operating from our London headquarters, we manage product sourcing, trade operations and e-commerce channels. We also provide trade solutions and supplier connections to businesses seeking to expand internationally." data-tr="Londra merkezimizden faaliyet göstererek ürün tedariki, ticaret operasyonları ve e-ticaret kanallarını yönetiyoruz. Ayrıca uluslararası genişleme hedefleyen işletmelere ticaret çözümleri ve tedarikçi bağlantıları sunuyoruz.">Operating from our London headquarters, we manage product sourcing, trade operations and e-commerce channels. We also provide trade solutions and supplier connections to businesses seeking to expand internationally.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="container">
+      <h2 class="section-title" data-en="Contact Us" data-tr="İletişim">Contact Us</h2>
+      <div class="contact-content">
+        <form class="contact-form">
+          <div class="form-group">
+            <label data-en="Name" data-tr="İsim">Name</label>
+            <input type="text" required>
+          </div>
+          <div class="form-group">
+            <label data-en="Email" data-tr="E-posta">Email</label>
+            <input type="email" required>
+          </div>
+          <div class="form-group">
+            <label data-en="Message" data-tr="Mesaj">Message</label>
+            <textarea required></textarea>
+          </div>
+          <button type="submit" class="cta-btn" data-en="Send Message" data-tr="Mesaj Gönder">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <p><strong>SERMIN LIMITED</strong></p>
+        <p><span data-en="Company Number: " data-tr="Şirket Numarası: ">Company Number: </span><span class="company-number">16778648</span></p>
+        <p class="footer-address">71-75 Shelton Street, Covent Garden, London, WC2H 9JQ, UK</p>
+        <p>Email: <a href="mailto:contact@sermin.uk" class="footer-email">contact@sermin.uk</a></p>
+        <p class="footer-copyright">© 2025 Sermin Limited. <span data-en="All rights reserved." data-tr="Tüm hakları saklıdır.">All rights reserved.</span></p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    let currentLang = 'en';
+    document.querySelectorAll('.lang-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const lang = btn.getAttribute('data-lang');
+        currentLang = lang;
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('[data-en]').forEach((el) => {
+          el.textContent = (lang === 'en') ? el.getAttribute('data-en') : el.getAttribute('data-tr');
+        });
+        document.documentElement.lang = lang;
+      });
+    });
+
+    document.querySelector('.contact-form').addEventListener('submit', function(e){
+      e.preventDefault();
+      alert(currentLang === 'en' ? 'Thank you for your message! We will get back to you soon.' : 'Mesajınız için teşekkürler! En kısa sürede size dönüş yapacağız.');
+      this.reset();
+    });
+  </script>
+</body>
+</html>
