@@ -219,6 +219,7 @@
       submitBtn.textContent = currentLang === 'en' ? 'Sending...' : 'Gönderiliyor...';
 
       try {
+        console.log('Sending request to /api/contact...');
         const response = await fetch('/api/contact', {
           method: 'POST',
           headers: {
@@ -227,7 +228,9 @@
           body: JSON.stringify({ name, email, message })
         });
 
+        console.log('Response status:', response.status);
         const data = await response.json();
+        console.log('Response data:', data);
 
         if (response.ok && data.ok) {
           alert(currentLang === 'en' 
@@ -235,10 +238,11 @@
             : 'Teşekkürler! Mesajınız başarıyla gönderildi.');
           form.reset();
         } else {
+          console.error('Server returned error:', data);
           throw new Error(data.error || 'Failed to send message');
         }
       } catch (error) {
-        console.error('Error:', error);
+        console.error('Detailed error:', error);
         alert(currentLang === 'en' 
           ? 'Sorry, something went wrong. Please try again or email us directly at contact@sermin.uk' 
           : 'Üzgünüz, bir hata oluştu. Lütfen tekrar deneyin veya contact@sermin.uk adresine doğrudan e-posta gönderin.');
