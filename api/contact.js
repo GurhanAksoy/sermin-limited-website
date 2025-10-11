@@ -1,11 +1,11 @@
-// /api/contact.js
+// api/contact.js
 const { Resend } = require('resend');
 const querystring = require('querystring');
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 module.exports = async (req, res) => {
-  // CORS (gerekirse origin kısıtlayabilirsin)
+  // Basit CORS (aynı origin çalıştığı için sorun yok ama garanti)
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -16,11 +16,11 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const contentType = req.headers['content-type'] || '';
+    const contentType = (req.headers['content-type'] || '').toLowerCase();
     let body = {};
 
+    // 🔧 JSON gövdeyi GERÇEKTEN oku (Vercel Node: req.body çoğu zaman dolu olmaz)
     if (contentType.includes('application/json')) {
-      // 🔧 DÜZELTME: JSON gövdeyi gerçekten oku ve parse et
       const buffers = [];
       for await (const chunk of req) buffers.push(chunk);
       const raw = Buffer.concat(buffers).toString('utf8');
@@ -31,7 +31,7 @@ module.exports = async (req, res) => {
       const raw = Buffer.concat(buffers).toString('utf8');
       body = querystring.parse(raw);
     } else {
-      // Diğer tipler için de dene
+      // Düz text vb. gelirse yine JSON dene
       const buffers = [];
       for await (const chunk of req) buffers.push(chunk);
       const raw = Buffer.concat(buffers).toString('utf8');
@@ -41,26 +41,30 @@ module.exports = async (req, res) => {
     const name = (body.name || '').toString().trim();
     const email = (body.email || '').toString().trim();
     const message = (body.message || '').toString().trim();
-    const botfield = (body.company || '').toString().trim(); // honeypot
+    const bot = (body.company || '').toString().trim(); // honeypot alanı varsa yut
 
-    if (botfield) return res.status(200).json({ ok: true });
+    if (bot) return res.status(200).json({ ok: true });
     if (!name || !email || !message) {
       return res.status(400).json({ ok: false, error: 'Missing fields' });
     }
-    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    if (!isEmail) return res.status(400).json({ ok: false, error: 'Invalid email' });
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return res.status(400).json({ ok: false, error: 'Invalid email' });
+    }
 
-    await resend.emails.send({
-      from: 'Sermin Contact <onboarding@resend.dev>', // test için hazır; domainin doğrulandıysa burayı kendi adresinle değiştir
+    // ✉️ E-posta gönder (test için default sender; domainin doğrulandıysa kendi adresini kullan)
+    const payload = {
+      from: 'Sermin Contact <onboarding@resend.dev>', // doğrulama bittiyse: 'Sermin Contact <contact@send.sermin.uk>'
       to: 'contact@sermin.uk',
-      replyTo: email, // ✅ SDK anahtarı doğru
+      replyTo: email,            // SDK için doğru anahtar
       subject: `Yeni mesaj: ${name}`,
       text: `Kimden: ${name} <${email}>\n\n${message}`
-    });
+    };
 
-    return res.status(200).json({ ok: true });
+    const result = await resend.emails.send(payload);
+    return res.status(200).json({ ok: true, result });
   } catch (err) {
-    console.error(err);
-    return res.status(500).json({ ok: false, error: 'Server error' });
+    console.error('Send error:', err);
+    // Hata mesajını geri döndür ki Network/Console'da görebilesin
+    return res.status(500).json({ ok: false, error: err?.message || 'Server error' });
   }
 };
