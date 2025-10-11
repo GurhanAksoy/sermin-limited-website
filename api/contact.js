@@ -1,80 +1,54 @@
 // /api/contact.js
-// Vercel Node.js (Serverless) uyumlu, ESM/CJS farkı yok. SDK yok, sadece fetch.
-// Frontend'e dokunmadan JSON body'yi kendimiz okuyoruz.
+const nodemailer = require('nodemailer');
 
 module.exports = async (req, res) => {
-  // Basit preflight
-  if (req.method === 'OPTIONS') {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    return res.status(200).end();
-  }
-
   if (req.method !== 'POST') {
     return res.status(405).json({ ok: false, error: 'Method Not Allowed' });
   }
 
   try {
-    // --- JSON body'yi oku ---
+    // JSON body'yi oku (index.html fetch ile JSON gönderiyor)
     const chunks = [];
-    for await (const chunk of req) chunks.push(chunk);
+    for await (const c of req) chunks.push(c);
     const raw = Buffer.concat(chunks).toString('utf8');
     let body = {};
     try { body = JSON.parse(raw || '{}'); } catch { body = {}; }
 
-    const name = (body.name || '').toString().trim();
-    const email = (body.email || '').toString().trim();
-    const message = (body.message || '').toString().trim();
+    const name = (body.name || '').trim();
+    const email = (body.email || '').trim();
+    const message = (body.message || '').trim();
 
     if (!name || !email || !message) {
       return res.status(400).json({ ok: false, error: 'Missing fields' });
     }
 
-    // --- ENV kontrolü ---
-    const API_KEY = process.env.RESEND_API_KEY;
-    if (!API_KEY) {
-      return res.status(500).json({ ok: false, error: 'RESEND_API_KEY missing' });
-    }
-    const TO = process.env.TO_EMAIL || 'contact@sermin.uk';
+    // Zoho SMTP — EU kullanıyorsan smtp.zoho.eu, US için smtp.zoho.com
+    const transporter = nodemailer.createTransport({
+      host: process.env.ZOHO_SMTP_HOST || 'smtp.zoho.eu',
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.ZOHO_USER, // örn: contact@sermin.uk
+        pass: process.env.ZOHO_PASS  // Zoho App Password (hesap şifresi değil)
+      }
+    });
 
-    // --- GÖNDERİM ---
-    // Domain doğrulaması beklemeden çalışması için test sender kullanıyoruz.
-    // Domainin doğrulandıysa aşağıdaki "from" değerini kendi adresinle değiştir:
-    // from: `Sermin Limited <contact@send.sermin.uk>`
-    const payload = {
-      from: 'Sermin Limited <onboarding@resend.dev>',
-      to: [TO],
+    const info = await transporter.sendMail({
+      from: `"Sermin Limited" <${process.env.ZOHO_USER}>`,
+      to: process.env.TO_EMAIL || 'contact@sermin.uk',
+      replyTo: email,
       subject: `Website Contact — ${name}`,
       text:
 `Name: ${name}
 Email: ${email}
 
 Message:
-${message}`,
-      reply_to: email // Resend REST alan adı "reply_to"
-    };
-
-    const r = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${API_KEY}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
+${message}`
     });
 
-    const text = await r.text();
-    let data = {};
-    try { data = JSON.parse(text); } catch { data = { raw: text }; }
-
-    if (!r.ok) {
-      // Hata sebebini öne çıkar — Network/Console’dan görürüz
-      return res.status(500).json({ ok: false, status: r.status, error: data });
-    }
-
-    return res.status(200).json({ ok: true, result: data });
+    return res.status(200).json({ ok: true, id: info.messageId });
   } catch (err) {
+    console.error('Mail error:', err);
     return res.status(500).json({ ok: false, error: err?.message || 'Server error' });
   }
 };

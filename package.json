@@ -3,6 +3,7 @@
   "private": true,
   "license": "UNLICENSED",
   "dependencies": {
+    "nodemailer": "^7.0.9",
     "resend": "^4.0.0"
   }
 }
