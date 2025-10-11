@@ -28,7 +28,7 @@
     /* HERO */
     .hero{margin-top:80px;padding:120px 0;text-align:center;background:#000 !important;position:relative;overflow:hidden}
     .hero::before{display:none !important;}
-    .hero-content{position:relative;z-index:1;top:35px;} /* hero biraz aşağıda */
+    .hero-content{position:relative;z-index:1;top:35px;}
     .hero h1{font-size:48px;margin-bottom:24px;font-weight:700;letter-spacing:-1px;color:var(--accent)!important;background:none!important;-webkit-text-fill-color:var(--accent)!important;}
     .hero p{font-size:20px;color:var(--muted);margin-bottom:40px;max-width:800px;margin-left:auto;margin-right:auto;line-height:1.6}
 
@@ -75,7 +75,6 @@
     .footer-email:hover{color:var(--accent)}
     .footer-copyright{margin-top:30px;color:#666;font-size:14px;padding-top:20px;border-top:1px solid #1a1a1a}
 
-    /* MOBİL AYARLAR */
     @media (max-width:768px){
       .hero h1{font-size:32px !important;}
       .hero p{font-size:16px}
@@ -174,25 +173,92 @@
   </footer>
 
   <script>
-    let currentLang = 'en';
-    document.querySelectorAll('.lang-btn').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const lang = btn.getAttribute('data-lang');
-        currentLang = lang;
-        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        document.querySelectorAll('[data-en]').forEach((el) => {
-          el.textContent = (lang === 'en') ? el.getAttribute('data-en') : el.getAttribute('data-tr');
-        });
-        document.documentElement.lang = lang;
+  let currentLang = 'en';
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const lang = btn.getAttribute('data-lang');
+      currentLang = lang;
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('[data-en]').forEach(el => {
+        el.textContent = (lang === 'en') ? el.getAttribute('data-en') : el.getAttribute('data-tr');
       });
+      document.documentElement.lang = lang;
     });
+  });
 
-    document.querySelector('.contact-form').addEventListener('submit', function(e){
-      e.preventDefault();
-      alert(currentLang === 'en' ? 'Thank you for your message! We will get back to you soon.' : 'Mesajınız için teşekkürler! En kısa sürede size dönüş yapacağız.');
-      this.reset();
-    });
-  </script>
+  // ✅ Contact form: kendi doğrulaması + mail gönderme
+  const form = document.querySelector('.contact-form');
+  const nameInput = form.querySelector('input[type="text"]');
+  const emailInput = form.querySelector('input[type="email"]');
+  const messageInput = form.querySelector('textarea');
+  const btn = form.querySelector('button[type="submit"]');
+
+  // Tarayıcının yerleşik uyarı sistemini kapat
+  form.setAttribute('novalidate', true);
+
+  function validateForm() {
+    const name = nameInput.value.trim();
+    const email = emailInput.value.trim();
+    const message = messageInput.value.trim();
+    const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+    if (!name || !email || !message) {
+      alert(currentLang === 'en'
+        ? 'Please fill in all fields.'
+        : 'Lütfen tüm alanları doldurun.');
+      return false;
+    }
+
+    if (!emailValid) {
+      alert(currentLang === 'en'
+        ? 'Please enter a valid email address.'
+        : 'Lütfen geçerli bir e-posta adresi girin.');
+      return false;
+    }
+
+    return { name, email, message };
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const values = validateForm();
+    if (!values) return;
+
+    btn.disabled = true;
+    const oldText = btn.textContent;
+    btn.textContent = currentLang === 'en' ? 'Sending...' : 'Gönderiliyor...';
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(values)
+      });
+      const data = await res.json();
+
+      if (res.ok && data.ok) {
+        alert(currentLang === 'en'
+          ? 'Thank you! Your message has been sent.'
+          : 'Teşekkürler! Mesajınız gönderildi.');
+        form.reset();
+      } else {
+        alert(currentLang === 'en'
+          ? 'Something went wrong. Please try again later.'
+          : 'Bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
+        console.error(data);
+      }
+    } catch (err) {
+      console.error(err);
+      alert(currentLang === 'en'
+        ? 'Network error. Please try again.'
+        : 'Bağlantı hatası. Lütfen tekrar deneyin.');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = oldText;
+    }
+  });
+</script>
+
 </body>
 </html>
