@@ -1,11 +1,11 @@
-// api/contact.js
+// /api/contact.js
 const { Resend } = require('resend');
 const querystring = require('querystring');
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 module.exports = async (req, res) => {
-  // CORS (gerekirse domainini kısıtlayabilirsin)
+  // CORS (gerekirse origin kısıtlayabilirsin)
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -16,23 +16,26 @@ module.exports = async (req, res) => {
   }
 
   try {
-    // Gövdeyi al (JSON veya form-encoded ikisini de destekle)
     const contentType = req.headers['content-type'] || '';
     let body = {};
 
     if (contentType.includes('application/json')) {
-      body = req.body || {};
+      // 🔧 DÜZELTME: JSON gövdeyi gerçekten oku ve parse et
+      const buffers = [];
+      for await (const chunk of req) buffers.push(chunk);
+      const raw = Buffer.concat(buffers).toString('utf8');
+      try { body = JSON.parse(raw || '{}'); } catch { body = {}; }
     } else if (contentType.includes('application/x-www-form-urlencoded')) {
-      // Vercel Node fonksiyonlarında urlencoded için raw body gelebilir
       const buffers = [];
       for await (const chunk of req) buffers.push(chunk);
       const raw = Buffer.concat(buffers).toString('utf8');
       body = querystring.parse(raw);
     } else {
-      // düz text vs. gelirse
+      // Diğer tipler için de dene
       const buffers = [];
       for await (const chunk of req) buffers.push(chunk);
-      try { body = JSON.parse(Buffer.concat(buffers).toString('utf8')); } catch {}
+      const raw = Buffer.concat(buffers).toString('utf8');
+      try { body = JSON.parse(raw || '{}'); } catch { body = {}; }
     }
 
     const name = (body.name || '').toString().trim();
@@ -40,19 +43,17 @@ module.exports = async (req, res) => {
     const message = (body.message || '').toString().trim();
     const botfield = (body.company || '').toString().trim(); // honeypot
 
-    // basit validasyon
-    if (botfield) return res.status(200).json({ ok: true }); // botları yutar
+    if (botfield) return res.status(200).json({ ok: true });
     if (!name || !email || !message) {
       return res.status(400).json({ ok: false, error: 'Missing fields' });
     }
     const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     if (!isEmail) return res.status(400).json({ ok: false, error: 'Invalid email' });
 
-    // e-posta gönder
     await resend.emails.send({
-      from: 'Sermin Contact <onboarding@resend.dev>', // Resend’te doğruladığın alt alan
-      to: 'contact@sermin.uk',                         // Zoho alıcı
-      replyTo: email,
+      from: 'Sermin Contact <onboarding@resend.dev>', // test için hazır; domainin doğrulandıysa burayı kendi adresinle değiştir
+      to: 'contact@sermin.uk',
+      replyTo: email, // ✅ SDK anahtarı doğru
       subject: `Yeni mesaj: ${name}`,
       text: `Kimden: ${name} <${email}>\n\n${message}`
     });
