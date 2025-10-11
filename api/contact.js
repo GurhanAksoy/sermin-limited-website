@@ -1,70 +1,80 @@
-// api/contact.js
-const { Resend } = require('resend');
-const querystring = require('querystring');
-
-const resend = new Resend(process.env.RESEND_API_KEY);
+// /api/contact.js
+// Vercel Node.js (Serverless) uyumlu, ESM/CJS farkı yok. SDK yok, sadece fetch.
+// Frontend'e dokunmadan JSON body'yi kendimiz okuyoruz.
 
 module.exports = async (req, res) => {
-  // Basit CORS (aynı origin çalıştığı için sorun yok ama garanti)
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  if (req.method === 'OPTIONS') return res.status(200).end();
+  // Basit preflight
+  if (req.method === 'OPTIONS') {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    return res.status(200).end();
+  }
 
   if (req.method !== 'POST') {
-    return res.status(405).json({ ok: false, error: 'Method not allowed' });
+    return res.status(405).json({ ok: false, error: 'Method Not Allowed' });
   }
 
   try {
-    const contentType = (req.headers['content-type'] || '').toLowerCase();
+    // --- JSON body'yi oku ---
+    const chunks = [];
+    for await (const chunk of req) chunks.push(chunk);
+    const raw = Buffer.concat(chunks).toString('utf8');
     let body = {};
-
-    // 🔧 JSON gövdeyi GERÇEKTEN oku (Vercel Node: req.body çoğu zaman dolu olmaz)
-    if (contentType.includes('application/json')) {
-      const buffers = [];
-      for await (const chunk of req) buffers.push(chunk);
-      const raw = Buffer.concat(buffers).toString('utf8');
-      try { body = JSON.parse(raw || '{}'); } catch { body = {}; }
-    } else if (contentType.includes('application/x-www-form-urlencoded')) {
-      const buffers = [];
-      for await (const chunk of req) buffers.push(chunk);
-      const raw = Buffer.concat(buffers).toString('utf8');
-      body = querystring.parse(raw);
-    } else {
-      // Düz text vb. gelirse yine JSON dene
-      const buffers = [];
-      for await (const chunk of req) buffers.push(chunk);
-      const raw = Buffer.concat(buffers).toString('utf8');
-      try { body = JSON.parse(raw || '{}'); } catch { body = {}; }
-    }
+    try { body = JSON.parse(raw || '{}'); } catch { body = {}; }
 
     const name = (body.name || '').toString().trim();
     const email = (body.email || '').toString().trim();
     const message = (body.message || '').toString().trim();
-    const bot = (body.company || '').toString().trim(); // honeypot alanı varsa yut
 
-    if (bot) return res.status(200).json({ ok: true });
     if (!name || !email || !message) {
       return res.status(400).json({ ok: false, error: 'Missing fields' });
     }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return res.status(400).json({ ok: false, error: 'Invalid email' });
-    }
 
-    // ✉️ E-posta gönder (test için default sender; domainin doğrulandıysa kendi adresini kullan)
+    // --- ENV kontrolü ---
+    const API_KEY = process.env.RESEND_API_KEY;
+    if (!API_KEY) {
+      return res.status(500).json({ ok: false, error: 'RESEND_API_KEY missing' });
+    }
+    const TO = process.env.TO_EMAIL || 'contact@sermin.uk';
+
+    // --- GÖNDERİM ---
+    // Domain doğrulaması beklemeden çalışması için test sender kullanıyoruz.
+    // Domainin doğrulandıysa aşağıdaki "from" değerini kendi adresinle değiştir:
+    // from: `Sermin Limited <contact@send.sermin.uk>`
     const payload = {
-      from: 'Sermin Contact <onboarding@resend.dev>', // doğrulama bittiyse: 'Sermin Contact <contact@send.sermin.uk>'
-      to: 'contact@sermin.uk',
-      replyTo: email,            // SDK için doğru anahtar
-      subject: `Yeni mesaj: ${name}`,
-      text: `Kimden: ${name} <${email}>\n\n${message}`
+      from: 'Sermin Limited <onboarding@resend.dev>',
+      to: [TO],
+      subject: `Website Contact — ${name}`,
+      text:
+`Name: ${name}
+Email: ${email}
+
+Message:
+${message}`,
+      reply_to: email // Resend REST alan adı "reply_to"
     };
 
-    const result = await resend.emails.send(payload);
-    return res.status(200).json({ ok: true, result });
+    const r = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const text = await r.text();
+    let data = {};
+    try { data = JSON.parse(text); } catch { data = { raw: text }; }
+
+    if (!r.ok) {
+      // Hata sebebini öne çıkar — Network/Console’dan görürüz
+      return res.status(500).json({ ok: false, status: r.status, error: data });
+    }
+
+    return res.status(200).json({ ok: true, result: data });
   } catch (err) {
-    console.error('Send error:', err);
-    // Hata mesajını geri döndür ki Network/Console'da görebilesin
     return res.status(500).json({ ok: false, error: err?.message || 'Server error' });
   }
 };
