@@ -16,20 +16,17 @@
     body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
     .container{max-width:1200px;margin:0 auto;padding:0 20px}
 
-    /* HEADER */
     header{background:#000;padding:20px 0;position:fixed;width:100%;top:0;z-index:1000;border-bottom:1px solid var(--line)}
     nav{display:flex;justify-content:center;align-items:center;position:relative}
-    .logo-img{height:200px;width:auto;display:block;object-fit:contain}
+    .logo-img{height:50px;width:auto;display:block;object-fit:contain}
     .lang-switch{position:absolute;right:20px;display:flex;gap:10px;align-items:center}
     .lang-btn{background:transparent;border:1px solid #4a4a4a;color:#9a9a9a;padding:8px 16px;cursor:pointer;transition:.25s;font-size:14px;border-radius:20px}
     .lang-btn.active{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-2) 100%);border-color:var(--gold);color:#000;font-weight:600;box-shadow:0 10px 30px rgba(255,209,102,.28)}
     .lang-btn:hover{border-color:var(--gold);color:#e5e5e5}
 
-    /* HERO */
-    .hero{margin-top:80px;padding:120px 0;text-align:center;background:#000 !important;position:relative;overflow:hidden}
-    .hero::before{display:none !important;}
-    .hero-content{position:relative;z-index:1;top:35px;}
-    .hero h1{font-size:48px;margin-bottom:24px;font-weight:700;letter-spacing:-1px;color:var(--accent)!important;background:none!important;-webkit-text-fill-color:var(--accent)!important;}
+    .hero{margin-top:80px;padding:120px 0;text-align:center;background:#000;position:relative;overflow:hidden}
+    .hero-content{position:relative;z-index:1}
+    .hero h1{font-size:58px;margin-bottom:24px;font-weight:700;letter-spacing:-1px;color:var(--accent);background:none}
     .hero p{font-size:20px;color:var(--muted);margin-bottom:40px;max-width:800px;margin-left:auto;margin-right:auto;line-height:1.6}
 
     .cta-btn{
@@ -39,16 +36,16 @@
       box-shadow:0 10px 30px rgba(255,209,102,.32)
     }
     .cta-btn:hover{transform:translateY(-2px);box-shadow:0 18px 42px rgba(255,209,102,.45)}
+    .cta-btn:disabled{opacity:0.6;cursor:not-allowed;transform:none}
 
-    /* SECTIONS */
     .services{padding:100px 0;background:var(--bg-2)}
-    .section-title{text-align:center;font-size:40px;margin-bottom:70px;font-weight:700;letter-spacing:-1px;color:var(--accent)!important;background:none!important;-webkit-text-fill-color:var(--accent)!important;position:relative;}
-    .section-title::after{content:'';position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);width:84px;height:3px;background:linear-gradient(90deg,transparent,var(--accent),transparent);border-radius:3px;}
+    .section-title{text-align:center;font-size:48px;margin-bottom:70px;font-weight:700;letter-spacing:-1px;color:var(--accent);background:none;position:relative}
+    .section-title::after{content:'';position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);width:84px;height:3px;background:linear-gradient(90deg,transparent,var(--accent),transparent);border-radius:3px}
 
     .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px}
     .service-card{background:linear-gradient(135deg,var(--panel-1) 0%,var(--panel-2) 100%);padding:40px;border-radius:14px;border:1px solid rgba(255,255,255,0.08);transition:.25s}
     .service-card:hover{transform:translateY(-6px);border-color:#3a3a3a;box-shadow:0 12px 34px rgba(0,0,0,.45)}
-    .service-card h3{font-size:24px;margin-bottom:15px;background:linear-gradient(135deg,var(--accent) 0%,var(--accent-2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;color:transparent;font-weight:600}
+    .service-card h3{font-size:24px;margin-bottom:15px;background:linear-gradient(135deg,var(--accent) 0%,var(--accent-2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:600}
     .service-card p{color:var(--muted);line-height:1.6}
 
     .about{padding:100px 0;background:#000}
@@ -64,7 +61,6 @@
     .form-group input:focus,.form-group textarea:focus{outline:none;border-color:#3f3f3f;box-shadow:0 0 0 3px rgba(183,122,255,.15)}
     .form-group textarea{min-height:150px;resize:vertical}
 
-    /* FOOTER */
     footer{background:#000;padding:60px 0;text-align:center;border-top:1px solid var(--line)}
     .footer-content{color:#9a9a9a;font-size:16px}
     .footer-content p{margin:12px 0}
@@ -76,14 +72,12 @@
     .footer-copyright{margin-top:30px;color:#666;font-size:14px;padding-top:20px;border-top:1px solid #1a1a1a}
 
     @media (max-width:768px){
-      .hero h1{font-size:32px !important;}
+      .hero h1{font-size:36px}
       .hero p{font-size:16px}
-      .section-title{font-size:28px !important;}
+      .section-title{font-size:32px}
       .services-grid{grid-template-columns:1fr}
-      .logo-img{height:120px !important;width:auto;}
-      .hero{margin-top:140px !important;}
-      .hero-content{top:20px !important;}
-      nav{flex-direction:column;gap:10px !important;}
+      .logo-img{height:40px}
+      nav{flex-direction:column;gap:15px}
       .lang-switch{position:static}
     }
   </style>
@@ -141,20 +135,20 @@
     <div class="container">
       <h2 class="section-title" data-en="Contact Us" data-tr="İletişim">Contact Us</h2>
       <div class="contact-content">
-        <form class="contact-form">
+        <form class="contact-form" id="contactForm">
           <div class="form-group">
             <label data-en="Name" data-tr="İsim">Name</label>
-            <input type="text" required>
+            <input type="text" name="name" id="name" required>
           </div>
           <div class="form-group">
             <label data-en="Email" data-tr="E-posta">Email</label>
-            <input type="email" required>
+            <input type="email" name="email" id="email" required>
           </div>
           <div class="form-group">
             <label data-en="Message" data-tr="Mesaj">Message</label>
-            <textarea required></textarea>
+            <textarea name="message" id="message" required></textarea>
           </div>
-          <button type="submit" class="cta-btn" data-en="Send Message" data-tr="Mesaj Gönder">Send Message</button>
+          <button type="submit" class="cta-btn" id="submitBtn" data-en="Send Message" data-tr="Mesaj Gönder">Send Message</button>
         </form>
       </div>
     </div>
@@ -173,92 +167,86 @@
   </footer>
 
   <script>
-  let currentLang = 'en';
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const lang = btn.getAttribute('data-lang');
-      currentLang = lang;
-      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      document.querySelectorAll('[data-en]').forEach(el => {
-        el.textContent = (lang === 'en') ? el.getAttribute('data-en') : el.getAttribute('data-tr');
+    let currentLang = 'en';
+    
+    // Language switcher
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.getAttribute('data-lang');
+        currentLang = lang;
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('[data-en]').forEach(el => {
+          const newText = (lang === 'en') ? el.getAttribute('data-en') : el.getAttribute('data-tr');
+          if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+            el.placeholder = newText;
+          } else {
+            el.textContent = newText;
+          }
+        });
+        document.documentElement.lang = lang;
       });
-      document.documentElement.lang = lang;
     });
-  });
 
-  // ✅ Contact form: kendi doğrulaması + mail gönderme
-  const form = document.querySelector('.contact-form');
-  const nameInput = form.querySelector('input[type="text"]');
-  const emailInput = form.querySelector('input[type="email"]');
-  const messageInput = form.querySelector('textarea');
-  const btn = form.querySelector('button[type="submit"]');
+    // Contact form submission
+    const form = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
 
-  // Tarayıcının yerleşik uyarı sistemini kapat
-  form.setAttribute('novalidate', true);
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
 
-  function validateForm() {
-    const name = nameInput.value.trim();
-    const email = emailInput.value.trim();
-    const message = messageInput.value.trim();
-    const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
 
-    if (!name || !email || !message) {
-      alert(currentLang === 'en'
-        ? 'Please fill in all fields.'
-        : 'Lütfen tüm alanları doldurun.');
-      return false;
-    }
-
-    if (!emailValid) {
-      alert(currentLang === 'en'
-        ? 'Please enter a valid email address.'
-        : 'Lütfen geçerli bir e-posta adresi girin.');
-      return false;
-    }
-
-    return { name, email, message };
-  }
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const values = validateForm();
-    if (!values) return;
-
-    btn.disabled = true;
-    const oldText = btn.textContent;
-    btn.textContent = currentLang === 'en' ? 'Sending...' : 'Gönderiliyor...';
-
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(values)
-      });
-      const data = await res.json();
-
-      if (res.ok && data.ok) {
-        alert(currentLang === 'en'
-          ? 'Thank you! Your message has been sent.'
-          : 'Teşekkürler! Mesajınız gönderildi.');
-        form.reset();
-      } else {
-        alert(currentLang === 'en'
-          ? 'Something went wrong. Please try again later.'
-          : 'Bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
-        console.error(data);
+      if (!name || !email || !message) {
+        alert(currentLang === 'en' 
+          ? 'Please fill in all fields.' 
+          : 'Lütfen tüm alanları doldurun.');
+        return;
       }
-    } catch (err) {
-      console.error(err);
-      alert(currentLang === 'en'
-        ? 'Network error. Please try again.'
-        : 'Bağlantı hatası. Lütfen tekrar deneyin.');
-    } finally {
-      btn.disabled = false;
-      btn.textContent = oldText;
-    }
-  });
-</script>
 
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        alert(currentLang === 'en' 
+          ? 'Please enter a valid email address.' 
+          : 'Lütfen geçerli bir e-posta adresi girin.');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = currentLang === 'en' ? 'Sending...' : 'Gönderiliyor...';
+
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ name, email, message })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.ok) {
+          alert(currentLang === 'en' 
+            ? 'Thank you! Your message has been sent successfully.' 
+            : 'Teşekkürler! Mesajınız başarıyla gönderildi.');
+          form.reset();
+        } else {
+          throw new Error(data.error || 'Failed to send message');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert(currentLang === 'en' 
+          ? 'Sorry, something went wrong. Please try again or email us directly at contact@sermin.uk' 
+          : 'Üzgünüz, bir hata oluştu. Lütfen tekrar deneyin veya contact@sermin.uk adresine doğrudan e-posta gönderin.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+      }
+    });
+  </script>
 </body>
 </html>
