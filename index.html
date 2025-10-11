@@ -18,13 +18,13 @@
 
     header{background:#000;padding:20px 0;position:fixed;width:100%;top:0;z-index:1000;border-bottom:1px solid var(--line)}
     nav{display:flex;justify-content:center;align-items:center;position:relative}
-    .logo-img{height:50px;width:auto;display:block;object-fit:contain}
+    .logo-img{height:200px;width:auto;display:block;object-fit:contain}
     .lang-switch{position:absolute;right:20px;display:flex;gap:10px;align-items:center}
     .lang-btn{background:transparent;border:1px solid #4a4a4a;color:#9a9a9a;padding:8px 16px;cursor:pointer;transition:.25s;font-size:14px;border-radius:20px}
     .lang-btn.active{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-2) 100%);border-color:var(--gold);color:#000;font-weight:600;box-shadow:0 10px 30px rgba(255,209,102,.28)}
     .lang-btn:hover{border-color:var(--gold);color:#e5e5e5}
 
-    .hero{margin-top:80px;padding:120px 0;text-align:center;background:#000;position:relative;overflow:hidden}
+    .hero{margin-top:80px;padding:160px 0 120px 0;text-align:center;background:#000;position:relative;overflow:hidden}
     .hero-content{position:relative;z-index:1}
     .hero h1{font-size:58px;margin-bottom:24px;font-weight:700;letter-spacing:-1px;color:var(--accent);background:none}
     .hero p{font-size:20px;color:var(--muted);margin-bottom:40px;max-width:800px;margin-left:auto;margin-right:auto;line-height:1.6}
@@ -135,18 +135,18 @@
     <div class="container">
       <h2 class="section-title" data-en="Contact Us" data-tr="İletişim">Contact Us</h2>
       <div class="contact-content">
-        <form class="contact-form" id="contactForm">
+        <form class="contact-form" id="contactForm" novalidate>
           <div class="form-group">
             <label data-en="Name" data-tr="İsim">Name</label>
-            <input type="text" name="name" id="name" required>
+            <input type="text" name="name" id="name">
           </div>
           <div class="form-group">
             <label data-en="Email" data-tr="E-posta">Email</label>
-            <input type="email" name="email" id="email" required>
+            <input type="email" name="email" id="email">
           </div>
           <div class="form-group">
             <label data-en="Message" data-tr="Mesaj">Message</label>
-            <textarea name="message" id="message" required></textarea>
+            <textarea name="message" id="message"></textarea>
           </div>
           <button type="submit" class="cta-btn" id="submitBtn" data-en="Send Message" data-tr="Mesaj Gönder">Send Message</button>
         </form>
@@ -199,10 +199,20 @@
       const email = document.getElementById('email').value.trim();
       const message = document.getElementById('message').value.trim();
 
-      if (!name || !email || !message) {
+      // Özel validasyon mesajları
+      if (!name) {
         alert(currentLang === 'en' 
-          ? 'Please fill in all fields.' 
-          : 'Lütfen tüm alanları doldurun.');
+          ? 'Please enter your name.' 
+          : 'Lütfen adınızı girin.');
+        document.getElementById('name').focus();
+        return;
+      }
+
+      if (!email) {
+        alert(currentLang === 'en' 
+          ? 'Please enter your email address.' 
+          : 'Lütfen e-posta adresinizi girin.');
+        document.getElementById('email').focus();
         return;
       }
 
@@ -211,6 +221,15 @@
         alert(currentLang === 'en' 
           ? 'Please enter a valid email address.' 
           : 'Lütfen geçerli bir e-posta adresi girin.');
+        document.getElementById('email').focus();
+        return;
+      }
+
+      if (!message) {
+        alert(currentLang === 'en' 
+          ? 'Please enter your message.' 
+          : 'Lütfen mesajınızı girin.');
+        document.getElementById('message').focus();
         return;
       }
 
