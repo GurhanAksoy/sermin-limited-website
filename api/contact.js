@@ -50,9 +50,9 @@ module.exports = async (req, res) => {
 
     // e-posta gönder
     await resend.emails.send({
-      from: 'Sermin Contact <contact@send.sermin.uk>', // Resend’te doğruladığın alt alan
+      from: 'Sermin Contact <onboarding@resend.dev>', // Resend’te doğruladığın alt alan
       to: 'contact@sermin.uk',                         // Zoho alıcı
-      reply_to: email,
+      replyTo: email,
       subject: `Yeni mesaj: ${name}`,
       text: `Kimden: ${name} <${email}>\n\n${message}`
     });
