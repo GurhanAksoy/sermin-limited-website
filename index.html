@@ -18,15 +18,20 @@
     }
 
     :root {
-      --navy: #0f1419;
-      --navy-light: #1a2332;
-      --accent: #3b82f6;
-      --accent-light: #60a5fa;
-      --gold: #f59e0b;
-      --text: #e5e7eb;
-      --text-muted: #9ca3af;
-      --border: rgba(59, 130, 246, 0.15);
+      --navy: #0a0e1a;
+      --navy-light: #111827;
+      --accent: #00d4ff;
+      --accent-light: #5eebff;
+      --accent-dark: #0099cc;
+      --neon-blue: #00d4ff;
+      --neon-cyan: #00fff7;
+      --neon-white: #ffffff;
+      --text: #f0f9ff;
+      --text-muted: #94a3b8;
+      --border: rgba(0, 212, 255, 0.3);
       --white: #ffffff;
+      --glow-blue: rgba(0, 212, 255, 0.6);
+      --glow-cyan: rgba(0, 255, 247, 0.4);
     }
 
     body {
@@ -51,42 +56,47 @@
       width: 100%;
       height: 100%;
       background: 
-        radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(245, 158, 11, 0.03) 0%, transparent 50%);
+        radial-gradient(circle at 20% 20%, rgba(0, 212, 255, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(0, 255, 247, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(94, 235, 255, 0.08) 0%, transparent 70%);
       z-index: 0;
       pointer-events: none;
+      animation: bgGlow 8s ease-in-out infinite alternate;
+    }
+
+    @keyframes bgGlow {
+      0% { opacity: 0.6; }
+      100% { opacity: 1; }
     }
 
     header {
       position: sticky;
       top: 0;
-      background: rgba(15, 20, 25, 0.95);
+      background: #000000;
       backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--border);
       z-index: 1000;
-      padding: 25px 0;
+      padding: 1px 0;
     }
 
     nav {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
       position: relative;
       z-index: 1;
     }
 
-    .logo-section {
-      display: flex;
-      align-items: center;
-    }
-
-    .logo-img {
-      height: 360px;
+    .logo-banner {
+      height: 140px;
       width: auto;
+      display: block;
       object-fit: contain;
     }
 
     .lang-switch {
+      position: absolute;
+      right: 20px;
       display: flex;
       gap: 8px;
       background: var(--navy-light);
@@ -110,13 +120,18 @@
     }
 
     .lang-btn:hover {
-      color: var(--accent-light);
-      background: rgba(59, 130, 246, 0.1);
+      color: var(--neon-cyan);
+      background: rgba(0, 212, 255, 0.1);
+      border-color: var(--neon-blue);
+      box-shadow: 0 0 10px var(--glow-blue);
     }
 
     .lang-btn.active {
-      background: var(--accent);
-      color: var(--white);
+      background: linear-gradient(135deg, var(--neon-blue), var(--neon-cyan));
+      color: var(--navy);
+      border-color: var(--neon-blue);
+      box-shadow: 0 0 20px var(--glow-blue);
+      font-weight: 700;
     }
 
     .hero {
@@ -131,24 +146,32 @@
       align-items: center;
       gap: 8px;
       padding: 10px 24px;
-      background: rgba(59, 130, 246, 0.1);
-      border: 1px solid var(--border);
+      background: rgba(0, 212, 255, 0.15);
+      border: 2px solid var(--neon-blue);
       border-radius: 50px;
       font-size: 13px;
       font-weight: 600;
-      color: var(--accent-light);
+      color: var(--neon-cyan);
       margin-bottom: 30px;
       text-transform: uppercase;
       letter-spacing: 1px;
+      box-shadow: 0 0 20px var(--glow-blue), inset 0 0 10px rgba(0, 212, 255, 0.2);
+      animation: neonPulse 2s ease-in-out infinite;
     }
 
     .hero-badge::before {
       content: '';
       width: 8px;
       height: 8px;
-      background: var(--accent);
+      background: var(--neon-cyan);
       border-radius: 50%;
+      box-shadow: 0 0 10px var(--neon-cyan);
       animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes neonPulse {
+      0%, 100% { box-shadow: 0 0 20px var(--glow-blue), inset 0 0 10px rgba(0, 212, 255, 0.2); }
+      50% { box-shadow: 0 0 30px var(--glow-blue), 0 0 40px var(--glow-cyan), inset 0 0 15px rgba(0, 212, 255, 0.3); }
     }
 
     @keyframes pulse {
@@ -178,20 +201,40 @@
     .cta-primary {
       display: inline-block;
       padding: 16px 40px;
-      background: var(--accent);
-      color: var(--white);
+      background: linear-gradient(135deg, var(--neon-blue) 0%, var(--neon-cyan) 100%);
+      color: var(--navy);
       text-decoration: none;
       border-radius: 10px;
-      font-weight: 600;
+      font-weight: 700;
       font-size: 16px;
       transition: all 0.3s ease;
-      box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+      box-shadow: 0 0 30px var(--glow-blue), 0 10px 40px rgba(0, 212, 255, 0.4);
+      text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-primary::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transform: rotate(45deg);
+      animation: shimmer 3s linear infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
     }
 
     .cta-primary:hover {
-      background: var(--accent-light);
-      transform: translateY(-2px);
-      box-shadow: 0 15px 40px rgba(59, 130, 246, 0.4);
+      background: linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-blue) 100%);
+      transform: translateY(-3px);
+      box-shadow: 0 0 40px var(--glow-cyan), 0 15px 50px rgba(0, 255, 247, 0.5);
     }
 
     .company-info {
@@ -242,11 +285,12 @@
     .section-label {
       font-size: 13px;
       font-weight: 700;
-      color: var(--accent);
+      color: var(--neon-cyan);
       text-transform: uppercase;
       letter-spacing: 2px;
       margin-bottom: 20px;
       display: block;
+      text-shadow: 0 0 10px var(--glow-cyan);
     }
 
     h2 {
@@ -287,10 +331,11 @@
       left: 0;
       width: 100%;
       height: 4px;
-      background: linear-gradient(90deg, var(--accent), var(--gold));
+      background: linear-gradient(90deg, var(--neon-blue), var(--neon-cyan), var(--neon-blue));
       transform: scaleX(0);
       transform-origin: left;
       transition: transform 0.4s ease;
+      box-shadow: 0 0 10px var(--glow-blue);
     }
 
     .service-card:hover::before {
@@ -298,21 +343,22 @@
     }
 
     .service-card:hover {
-      border-color: var(--accent);
+      border-color: var(--neon-blue);
       transform: translateY(-5px);
-      box-shadow: 0 20px 50px rgba(59, 130, 246, 0.15);
+      box-shadow: 0 0 30px var(--glow-blue), 0 20px 50px rgba(0, 212, 255, 0.2);
     }
 
     .service-icon {
       width: 60px;
       height: 60px;
-      background: linear-gradient(135deg, var(--accent), var(--accent-light));
+      background: linear-gradient(135deg, var(--neon-blue), var(--neon-cyan));
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 28px;
       margin-bottom: 25px;
+      box-shadow: 0 0 20px var(--glow-blue);
     }
 
     .service-card h3 {
@@ -353,41 +399,45 @@
 
     .project-card:hover {
       transform: translateY(-8px);
-      border-color: var(--accent);
-      box-shadow: 0 25px 60px rgba(59, 130, 246, 0.2);
+      border-color: var(--neon-blue);
+      box-shadow: 0 0 40px var(--glow-blue), 0 25px 60px rgba(0, 212, 255, 0.3);
     }
 
     .project-featured {
-      border: 2px solid var(--accent);
-      background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), transparent);
+      border: 2px solid var(--neon-blue);
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.08), transparent);
+      box-shadow: 0 0 30px var(--glow-blue);
     }
 
     .project-header {
       padding: 40px;
-      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), transparent);
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), transparent);
       border-bottom: 1px solid var(--border);
       position: relative;
     }
 
     .project-featured .project-header {
-      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(245, 158, 11, 0.05));
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(0, 255, 247, 0.1));
     }
 
     .project-badge {
       display: inline-block;
       padding: 6px 16px;
-      background: var(--accent);
-      color: var(--white);
+      background: var(--neon-blue);
+      color: var(--navy);
       border-radius: 20px;
       font-size: 11px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 1px;
       margin-bottom: 20px;
+      box-shadow: 0 0 15px var(--glow-blue);
     }
 
     .project-badge.featured {
-      background: linear-gradient(135deg, var(--accent), var(--gold));
+      background: linear-gradient(135deg, var(--neon-blue), var(--neon-cyan));
+      box-shadow: 0 0 20px var(--glow-cyan);
+      animation: neonPulse 2s ease-in-out infinite;
     }
 
     .project-card h3 {
@@ -508,17 +558,19 @@
     }
 
     .stat-box:hover {
-      border-color: var(--accent);
+      border-color: var(--neon-blue);
       transform: translateY(-3px);
+      box-shadow: 0 0 25px var(--glow-blue);
     }
 
     .stat-number {
       font-family: 'Playfair Display', serif;
       font-size: 42px;
       font-weight: 900;
-      color: var(--accent-light);
+      color: var(--neon-cyan);
       margin-bottom: 10px;
       display: block;
+      text-shadow: 0 0 10px var(--glow-cyan);
     }
 
     .stat-label {
@@ -547,20 +599,22 @@
     }
 
     .values-list li:hover {
-      border-color: var(--accent);
-      background: rgba(59, 130, 246, 0.05);
+      border-color: var(--neon-blue);
+      background: rgba(0, 212, 255, 0.05);
+      box-shadow: 0 0 20px var(--glow-blue);
     }
 
     .value-icon {
       width: 40px;
       height: 40px;
-      background: var(--accent);
+      background: linear-gradient(135deg, var(--neon-blue), var(--neon-cyan));
       border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 20px;
       flex-shrink: 0;
+      box-shadow: 0 0 15px var(--glow-blue);
     }
 
     .value-content strong {
@@ -621,20 +675,22 @@
     }
 
     .contact-item:hover {
-      border-color: var(--accent);
-      background: rgba(59, 130, 246, 0.05);
+      border-color: var(--neon-blue);
+      background: rgba(0, 212, 255, 0.05);
+      box-shadow: 0 0 20px var(--glow-blue);
     }
 
     .contact-icon {
       width: 45px;
       height: 45px;
-      background: var(--accent);
+      background: linear-gradient(135deg, var(--neon-blue), var(--neon-cyan));
       border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 20px;
       flex-shrink: 0;
+      box-shadow: 0 0 15px var(--glow-blue);
     }
 
     .contact-info-text {
@@ -717,8 +773,17 @@
         padding: 0 20px;
       }
 
-      .logo-img {
-        height: 60px;
+      .logo-banner {
+        height: 90px;
+      }
+
+      nav {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .lang-switch {
+        position: static;
       }
 
       .hero {
@@ -760,9 +825,7 @@
 <body>
   <header>
     <nav class="container">
-      <div class="logo-section">
-        <img src="logo.png" alt="Sermin Limited" class="logo-img">
-      </div>
+      <img src="logo.png" alt="Sermin Limited" class="logo-banner">
       <div class="lang-switch">
         <button class="lang-btn active" data-lang="en">EN</button>
         <button class="lang-btn" data-lang="tr">TR</button>
@@ -777,7 +840,6 @@
       <p class="hero-subtitle" data-en="Sermin Limited is a London-based technology company specializing in artificial intelligence systems, digital commerce solutions, and innovative product development for the global market." data-tr="Sermin Limited, yapay zeka sistemleri, dijital ticaret çözümleri ve küresel pazar için yenilikçi ürün geliştirme konusunda uzmanlaşmış Londra merkezli bir teknoloji şirketidir.">
         Sermin Limited is a London-based technology company specializing in artificial intelligence systems, digital commerce solutions, and innovative product development for the global market.
       </p>
-      <a href="#contact" class="cta-primary" data-en="Get In Touch" data-tr="İletişime Geçin">Get In Touch</a>
 
       <div class="company-info">
         <div class="info-item">
@@ -1037,7 +1099,7 @@
     <div class="container">
       <div class="footer-company">Sermin Limited</div>
       <div class="footer-info">
-        <strong>Sermin Limited</strong> | <span data-en="Company Number:" data-tr="Şirket Numarası:">Company Number:</span> 16778648
+        <span data-en="Company Number:" data-tr="Şirket Numarası:">Company Number:</span> 16778648
       </div>
       <div class="footer-info">
         71-75 Shelton Street, Covent Garden, London, WC2H 9JQ, United Kingdom
@@ -1099,18 +1161,4 @@
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-        }
-      });
-    }, observerOptions);
-
-    document.querySelectorAll('.service-card, .project-card, .stat-box, .values-list li').forEach(el => {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(20px)';
-      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-      observer.observe(el);
-    });
-  </script>
-</body>
-</html>
-
+          
