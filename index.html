@@ -996,29 +996,38 @@
     </div>
   </footer>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-    // DİL BUTONU - ÇALIŞIR VERSİYON
-    document.querySelectorAll('.lang-btn').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        var lang = this.getAttribute('data-lang');
-        
-        // Button active durumu
-        document.querySelectorAll('.lang-btn').forEach(function(b) {
-          b.classList.remove('active');
-        });
-        this.classList.add('active');
-        
-        // Tüm metinleri değiştir
-        document.querySelectorAll('[data-en][data-tr]').forEach(function(el) {
-          var enText = el.getAttribute('data-en');
-          var trText = el.getAttribute('data-tr');
-          var newText = (lang === 'en') ? enText : trText;
-          el.textContent = newText;
+
+  <script>
+    // DİL DEĞİŞTİRİCİ - ÇALIŞAN VERSİYON
+    document.addEventListener('DOMContentLoaded', function() {
+      var langButtons = document.querySelectorAll('.lang-btn');
+      
+      langButtons.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var selectedLang = this.getAttribute('data-lang');
+          
+          // Button durumunu güncelle
+          langButtons.forEach(function(b) {
+            b.classList.remove('active');
+          });
+          this.classList.add('active');
+          
+          // Tüm çevrilecek elementleri güncelle
+          var elements = document.querySelectorAll('[data-en][data-tr]');
+          elements.forEach(function(el) {
+            var enText = el.getAttribute('data-en');
+            var trText = el.getAttribute('data-tr');
+            
+            if (enText && trText) {
+              var newText = (selectedLang === 'en') ? enText : trText;
+              el.textContent = newText;
+            }
+          });
         });
       });
     });
     
-    // Animasyon
+    // Animasyon Observer
     var observer = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
         if (entry.isIntersecting) {
@@ -1028,4 +1037,13 @@
       });
     }, { threshold: 0.1 });
     
-    document.querySelectorAll('.service-card, .project-card, .stat-b
+    // Animate edilecek elementler
+    document.querySelectorAll('.service-card, .project-card, .stat-box').forEach(function(el) {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
