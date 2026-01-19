@@ -20,18 +20,14 @@
     :root {
       --navy: #0a0e1a;
       --navy-light: #111827;
-      --accent: #00d4ff;
-      --accent-light: #5eebff;
-      --accent-dark: #0099cc;
-      --neon-blue: #00d4ff;
-      --neon-cyan: #00fff7;
-      --neon-white: #ffffff;
-      --text: #f0f9ff;
+      --accent: #2563eb;
+      --accent-light: #3b82f6;
+      --accent-subtle: #1e40af;
+      --text: #f1f5f9;
       --text-muted: #94a3b8;
-      --border: rgba(0, 212, 255, 0.3);
+      --border: rgba(148, 163, 184, 0.15);
       --white: #ffffff;
-      --glow-blue: rgba(0, 212, 255, 0.6);
-      --glow-cyan: rgba(0, 255, 247, 0.4);
+      --glow: rgba(37, 99, 235, 0.2);
     }
 
     body {
@@ -56,17 +52,10 @@
       width: 100%;
       height: 100%;
       background: 
-        radial-gradient(circle at 20% 20%, rgba(0, 212, 255, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(0, 255, 247, 0.12) 0%, transparent 50%),
-        radial-gradient(circle at 50% 50%, rgba(94, 235, 255, 0.08) 0%, transparent 70%);
+        radial-gradient(circle at 20% 20%, rgba(37, 99, 235, 0.04) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.03) 0%, transparent 50%);
       z-index: 0;
       pointer-events: none;
-      animation: bgGlow 8s ease-in-out infinite alternate;
-    }
-
-    @keyframes bgGlow {
-      0% { opacity: 0.6; }
-      100% { opacity: 1; }
     }
 
     header {
@@ -120,18 +109,15 @@
     }
 
     .lang-btn:hover {
-      color: var(--neon-cyan);
-      background: rgba(0, 212, 255, 0.1);
-      border-color: var(--neon-blue);
-      box-shadow: 0 0 10px var(--glow-blue);
+      color: var(--accent-light);
+      background: rgba(37, 99, 235, 0.1);
+      border-color: var(--accent);
     }
 
     .lang-btn.active {
-      background: linear-gradient(135deg, var(--neon-blue), var(--neon-cyan));
-      color: var(--navy);
-      border-color: var(--neon-blue);
-      box-shadow: 0 0 20px var(--glow-blue);
-      font-weight: 700;
+      background: var(--accent);
+      color: var(--white);
+      border-color: var(--accent);
     }
 
     .hero {
@@ -146,32 +132,24 @@
       align-items: center;
       gap: 8px;
       padding: 10px 24px;
-      background: rgba(0, 212, 255, 0.15);
-      border: 2px solid var(--neon-blue);
+      background: rgba(37, 99, 235, 0.08);
+      border: 1px solid rgba(37, 99, 235, 0.3);
       border-radius: 50px;
       font-size: 13px;
       font-weight: 600;
-      color: var(--neon-cyan);
+      color: var(--accent-light);
       margin-bottom: 30px;
       text-transform: uppercase;
       letter-spacing: 1px;
-      box-shadow: 0 0 20px var(--glow-blue), inset 0 0 10px rgba(0, 212, 255, 0.2);
-      animation: neonPulse 2s ease-in-out infinite;
     }
 
     .hero-badge::before {
       content: '';
       width: 8px;
       height: 8px;
-      background: var(--neon-cyan);
+      background: var(--accent);
       border-radius: 50%;
-      box-shadow: 0 0 10px var(--neon-cyan);
       animation: pulse 2s ease-in-out infinite;
-    }
-
-    @keyframes neonPulse {
-      0%, 100% { box-shadow: 0 0 20px var(--glow-blue), inset 0 0 10px rgba(0, 212, 255, 0.2); }
-      50% { box-shadow: 0 0 30px var(--glow-blue), 0 0 40px var(--glow-cyan), inset 0 0 15px rgba(0, 212, 255, 0.3); }
     }
 
     @keyframes pulse {
@@ -201,40 +179,20 @@
     .cta-primary {
       display: inline-block;
       padding: 16px 40px;
-      background: linear-gradient(135deg, var(--neon-blue) 0%, var(--neon-cyan) 100%);
-      color: var(--navy);
+      background: var(--accent);
+      color: var(--white);
       text-decoration: none;
       border-radius: 10px;
       font-weight: 700;
       font-size: 16px;
       transition: all 0.3s ease;
-      box-shadow: 0 0 30px var(--glow-blue), 0 10px 40px rgba(0, 212, 255, 0.4);
-      text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .cta-primary::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-      transform: rotate(45deg);
-      animation: shimmer 3s linear infinite;
-    }
-
-    @keyframes shimmer {
-      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
     }
 
     .cta-primary:hover {
-      background: linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-blue) 100%);
-      transform: translateY(-3px);
-      box-shadow: 0 0 40px var(--glow-cyan), 0 15px 50px rgba(0, 255, 247, 0.5);
+      background: var(--accent-light);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
     }
 
     .company-info {
@@ -285,12 +243,11 @@
     .section-label {
       font-size: 13px;
       font-weight: 700;
-      color: var(--neon-cyan);
+      color: var(--accent);
       text-transform: uppercase;
       letter-spacing: 2px;
       margin-bottom: 20px;
       display: block;
-      text-shadow: 0 0 10px var(--glow-cyan);
     }
 
     h2 {
@@ -330,12 +287,11 @@
       top: 0;
       left: 0;
       width: 100%;
-      height: 4px;
-      background: linear-gradient(90deg, var(--neon-blue), var(--neon-cyan), var(--neon-blue));
+      height: 3px;
+      background: var(--accent);
       transform: scaleX(0);
       transform-origin: left;
       transition: transform 0.4s ease;
-      box-shadow: 0 0 10px var(--glow-blue);
     }
 
     .service-card:hover::before {
@@ -343,22 +299,21 @@
     }
 
     .service-card:hover {
-      border-color: var(--neon-blue);
+      border-color: var(--accent);
       transform: translateY(-5px);
-      box-shadow: 0 0 30px var(--glow-blue), 0 20px 50px rgba(0, 212, 255, 0.2);
+      box-shadow: 0 10px 30px rgba(37, 99, 235, 0.15);
     }
 
     .service-icon {
       width: 60px;
       height: 60px;
-      background: linear-gradient(135deg, var(--neon-blue), var(--neon-cyan));
+      background: var(--accent);
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 28px;
       margin-bottom: 25px;
-      box-shadow: 0 0 20px var(--glow-blue);
     }
 
     .service-card h3 {
@@ -399,45 +354,41 @@
 
     .project-card:hover {
       transform: translateY(-8px);
-      border-color: var(--neon-blue);
-      box-shadow: 0 0 40px var(--glow-blue), 0 25px 60px rgba(0, 212, 255, 0.3);
+      border-color: var(--accent);
+      box-shadow: 0 15px 40px rgba(37, 99, 235, 0.2);
     }
 
     .project-featured {
-      border: 2px solid var(--neon-blue);
-      background: linear-gradient(135deg, rgba(0, 212, 255, 0.08), transparent);
-      box-shadow: 0 0 30px var(--glow-blue);
+      border: 2px solid var(--accent);
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), transparent);
     }
 
     .project-header {
       padding: 40px;
-      background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), transparent);
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), transparent);
       border-bottom: 1px solid var(--border);
       position: relative;
     }
 
     .project-featured .project-header {
-      background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(0, 255, 247, 0.1));
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.12), transparent);
     }
 
     .project-badge {
       display: inline-block;
       padding: 6px 16px;
-      background: var(--neon-blue);
-      color: var(--navy);
+      background: var(--accent);
+      color: var(--white);
       border-radius: 20px;
       font-size: 11px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 1px;
       margin-bottom: 20px;
-      box-shadow: 0 0 15px var(--glow-blue);
     }
 
     .project-badge.featured {
-      background: linear-gradient(135deg, var(--neon-blue), var(--neon-cyan));
-      box-shadow: 0 0 20px var(--glow-cyan);
-      animation: neonPulse 2s ease-in-out infinite;
+      background: var(--accent);
     }
 
     .project-card h3 {
@@ -558,19 +509,18 @@
     }
 
     .stat-box:hover {
-      border-color: var(--neon-blue);
+      border-color: var(--accent);
       transform: translateY(-3px);
-      box-shadow: 0 0 25px var(--glow-blue);
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.15);
     }
 
     .stat-number {
       font-family: 'Playfair Display', serif;
       font-size: 42px;
       font-weight: 900;
-      color: var(--neon-cyan);
+      color: var(--accent-light);
       margin-bottom: 10px;
       display: block;
-      text-shadow: 0 0 10px var(--glow-cyan);
     }
 
     .stat-label {
@@ -599,22 +549,20 @@
     }
 
     .values-list li:hover {
-      border-color: var(--neon-blue);
-      background: rgba(0, 212, 255, 0.05);
-      box-shadow: 0 0 20px var(--glow-blue);
+      border-color: var(--accent);
+      background: rgba(37, 99, 235, 0.05);
     }
 
     .value-icon {
       width: 40px;
       height: 40px;
-      background: linear-gradient(135deg, var(--neon-blue), var(--neon-cyan));
+      background: var(--accent);
       border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 20px;
       flex-shrink: 0;
-      box-shadow: 0 0 15px var(--glow-blue);
     }
 
     .value-content strong {
@@ -647,13 +595,57 @@
     }
 
     .contact-box h2 {
-      margin-bottom: 20px;
+      margin-bottom: 40px;
     }
 
     .contact-box p {
       color: var(--text-muted);
       font-size: 16px;
       margin-bottom: 40px;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      text-align: left;
+      margin-bottom: 40px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group label {
+      margin-bottom: 8px;
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      padding: 12px 16px;
+      background: var(--navy);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: rgba(37, 99, 235, 0.05);
+    }
+
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
     }
 
     .contact-details {
@@ -675,22 +667,20 @@
     }
 
     .contact-item:hover {
-      border-color: var(--neon-blue);
-      background: rgba(0, 212, 255, 0.05);
-      box-shadow: 0 0 20px var(--glow-blue);
+      border-color: var(--accent);
+      background: rgba(37, 99, 235, 0.05);
     }
 
     .contact-icon {
       width: 45px;
       height: 45px;
-      background: linear-gradient(135deg, var(--neon-blue), var(--neon-cyan));
+      background: var(--accent);
       border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 20px;
       flex-shrink: 0;
-      box-shadow: 0 0 15px var(--glow-blue);
     }
 
     .contact-info-text {
@@ -900,22 +890,6 @@
             Business intelligence platforms, predictive analytics, and data-driven decision support systems to unlock actionable insights from your data.
           </p>
         </div>
-
-        <div class="service-card">
-          <div class="service-icon">☁️</div>
-          <h3 data-en="Cloud Infrastructure" data-tr="Bulut Altyapısı">Cloud Infrastructure</h3>
-          <p data-en="Enterprise-grade cloud solutions with industry-leading platforms, scalable architecture design, and managed services for reliability and performance." data-tr="Sektör lideri platformlarla kurumsal düzeyde bulut çözümleri, ölçeklenebilir mimari tasarımı ve güvenilirlik ve performans için yönetilen hizmetler.">
-            Enterprise-grade cloud solutions with industry-leading platforms, scalable architecture design, and managed services for reliability and performance.
-          </p>
-        </div>
-
-        <div class="service-card">
-          <div class="service-icon">🚀</div>
-          <h3 data-en="Product Innovation" data-tr="Ürün İnovasyonu">Product Innovation</h3>
-          <p data-en="End-to-end product development from concept to launch, including market research, prototyping, and go-to-market strategy execution." data-tr="Pazar araştırması, prototipleme ve pazara giriş stratejisi uygulaması dahil olmak üzere konseptten lansmanına kadar uçtan uca ürün geliştirme.">
-            End-to-end product development from concept to launch, including market research, prototyping, and go-to-market strategy execution.
-          </p>
-        </div>
       </div>
     </div>
   </section>
@@ -951,42 +925,6 @@
             <a href="https://www.vibraxx.com" target="_blank" class="project-link" data-en="Visit VibraXX" data-tr="VibraXX'i Ziyaret Edin">Visit VibraXX</a>
           </div>
         </div>
-
-        <div class="project-card">
-          <div class="project-header">
-            <span class="project-badge" data-en="Digital Commerce" data-tr="Dijital Ticaret">Digital Commerce</span>
-            <h3 data-en="E-Commerce Solutions" data-tr="E-Ticaret Çözümleri">E-Commerce Solutions</h3>
-            <p class="project-tagline" data-en="International Trade Platforms" data-tr="Uluslararası Ticaret Platformları">International Trade Platforms</p>
-          </div>
-          <div class="project-body">
-            <p class="project-description" data-en="Comprehensive e-commerce and digital trade solutions connecting businesses to global markets through innovative technology and streamlined operations." data-tr="Yenilikçi teknoloji ve kolaylaştırılmış operasyonlar aracılığıyla işletmeleri küresel pazarlara bağlayan kapsamlı e-ticaret ve dijital ticaret çözümleri.">
-              Comprehensive e-commerce and digital trade solutions connecting businesses to global markets through innovative technology and streamlined operations.
-            </p>
-            <ul class="project-features">
-              <li data-en="Multi-channel marketplace integration" data-tr="Çok kanallı pazar yeri entegrasyonu">Multi-channel marketplace integration</li>
-              <li data-en="Automated inventory management" data-tr="Otomatik envanter yönetimi">Automated inventory management</li>
-              <li data-en="International logistics coordination" data-tr="Uluslararası lojistik koordinasyonu">International logistics coordination</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="project-card">
-          <div class="project-header">
-            <span class="project-badge" data-en="In Development" data-tr="Geliştiriliyor">In Development</span>
-            <h3 data-en="Innovation Pipeline" data-tr="İnovasyon Hattı">Innovation Pipeline</h3>
-            <p class="project-tagline" data-en="Next-Generation Products" data-tr="Yeni Nesil Ürünler">Next-Generation Products</p>
-          </div>
-          <div class="project-body">
-            <p class="project-description" data-en="We continuously invest in research and development to create breakthrough products that address emerging market needs and technological opportunities." data-tr="Gelişen pazar ihtiyaçlarını ve teknolojik fırsatları ele alan çığır açan ürünler yaratmak için sürekli araştırma ve geliştirmeye yatırım yapıyoruz.">
-              We continuously invest in research and development to create breakthrough products that address emerging market needs and technological opportunities.
-            </p>
-            <ul class="project-features">
-              <li data-en="AI-powered business automation tools" data-tr="AI destekli iş otomasyon araçları">AI-powered business automation tools</li>
-              <li data-en="Advanced analytics platforms" data-tr="Gelişmiş analitik platformları">Advanced analytics platforms</li>
-              <li data-en="Next-generation user experiences" data-tr="Yeni nesil kullanıcı deneyimleri">Next-generation user experiences</li>
-            </ul>
-          </div>
-        </div>
       </div>
     </div>
   </section>
@@ -997,14 +935,8 @@
         <div class="about-content">
           <span class="section-label" data-en="About Us" data-tr="Hakkımızda">About Us</span>
           <h2 data-en="Driving Digital Transformation" data-tr="Dijital Dönüşümü Yönlendirmek">Driving Digital Transformation</h2>
-          <p data-en="Founded and registered in London, Sermin Limited operates at the intersection of artificial intelligence, digital commerce, and innovative technology solutions." data-tr="Londra'da kurulan ve kayıtlı olan Sermin Limited, yapay zeka, dijital ticaret ve yenilikçi teknoloji çözümlerinin kesişim noktasında faaliyet göstermektedir.">
-            Founded and registered in London, Sermin Limited operates at the intersection of artificial intelligence, digital commerce, and innovative technology solutions.
-          </p>
-          <p data-en="Our team combines deep technical expertise with business acumen to deliver solutions that not only meet current needs but anticipate future market demands. We specialize in building scalable, intelligent systems that drive measurable business outcomes." data-tr="Ekibimiz, yalnızca mevcut ihtiyaçları karşılamakla kalmayıp gelecekteki pazar taleplerini öngören çözümler sunmak için derin teknik uzmanlığı iş anlayışıyla birleştirir. Ölçülebilir iş sonuçları sağlayan ölçeklenebilir, akıllı sistemler oluşturma konusunda uzmanız.">
-            Our team combines deep technical expertise with business acumen to deliver solutions that not only meet current needs but anticipate future market demands. We specialize in building scalable, intelligent systems that drive measurable business outcomes.
-          </p>
-          <p data-en="With a commitment to innovation, quality, and customer success, we partner with organizations globally to transform their digital capabilities and achieve sustainable growth." data-tr="İnovasyon, kalite ve müşteri başarısına olan bağlılığımızla, dijital yeteneklerini dönüştürmek ve sürdürülebilir büyüme elde etmek için küresel olarak organizasyonlarla ortaklık kuruyoruz.">
-            With a commitment to innovation, quality, and customer success, we partner with organizations globally to transform their digital capabilities and achieve sustainable growth.
+          <p data-en="Founded and registered in London, Sermin Limited operates at the intersection of artificial intelligence, digital commerce, and innovative technology solutions. With a commitment to innovation and quality, we partner with organizations globally to transform their digital capabilities and achieve sustainable growth." data-tr="Londra'da kurulan ve kayıtlı olan Sermin Limited, yapay zeka, dijital ticaret ve yenilikçi teknoloji çözümlerinin kesişim noktasında faaliyet göstermektedir. İnovasyon ve kaliteye olan bağlılığımızla, dijital yeteneklerini dönüştürmek ve sürdürülebilir büyüme elde etmek için küresel olarak organizasyonlarla ortaklık kuruyoruz.">
+            Founded and registered in London, Sermin Limited operates at the intersection of artificial intelligence, digital commerce, and innovative technology solutions. With a commitment to innovation and quality, we partner with organizations globally to transform their digital capabilities and achieve sustainable growth.
           </p>
         </div>
 
@@ -1027,70 +959,7 @@
               <span class="stat-label" data-en="Market Reach" data-tr="Pazar Erişimi">Market Reach</span>
             </div>
           </div>
-
-          <ul class="values-list" style="margin-top: 40px;">
-            <li>
-              <div class="value-icon">🎯</div>
-              <div class="value-content">
-                <strong data-en="Innovation First" data-tr="Önce İnovasyon">Innovation First</strong>
-                <span data-en="Constantly pushing boundaries with cutting-edge technology" data-tr="Son teknoloji ile sürekli sınırları zorluyoruz">Constantly pushing boundaries with cutting-edge technology</span>
-              </div>
-            </li>
-            <li>
-              <div class="value-icon">💡</div>
-              <div class="value-content">
-                <strong data-en="Quality Excellence" data-tr="Kalite Mükemmelliği">Quality Excellence</strong>
-                <span data-en="Uncompromising standards in every solution we deliver" data-tr="Sunduğumuz her çözümde taviz vermeyen standartlar">Uncompromising standards in every solution we deliver</span>
-              </div>
-            </li>
-            <li>
-              <div class="value-icon">🤝</div>
-              <div class="value-content">
-                <strong data-en="Partnership Mindset" data-tr="Ortaklık Zihniyeti">Partnership Mindset</strong>
-                <span data-en="Building long-term relationships through trust and results" data-tr="Güven ve sonuçlar yoluyla uzun vadeli ilişkiler kurma">Building long-term relationships through trust and results</span>
-              </div>
-            </li>
-          </ul>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="contact" class="contact-section">
-    <div class="container">
-      <div class="contact-box">
-        <h2 data-en="Let's Work Together" data-tr="Birlikte Çalışalım">Let's Work Together</h2>
-        <p data-en="Ready to transform your business with innovative technology solutions? Get in touch with our team to discuss your project." data-tr="İşinizi yenilikçi teknoloji çözümleriyle dönüştürmeye hazır mısınız? Projenizi görüşmek için ekibimizle iletişime geçin.">
-          Ready to transform your business with innovative technology solutions? Get in touch with our team to discuss your project.
-        </p>
-
-        <div class="contact-details">
-          <div class="contact-item">
-            <div class="contact-icon">📧</div>
-            <div class="contact-info-text">
-              <div class="contact-label" data-en="Email" data-tr="E-posta">Email</div>
-              <div class="contact-value"><a href="mailto:contact@sermin.uk">contact@sermin.uk</a></div>
-            </div>
-          </div>
-
-          <div class="contact-item">
-            <div class="contact-icon">📍</div>
-            <div class="contact-info-text">
-              <div class="contact-label" data-en="Address" data-tr="Adres">Address</div>
-              <div class="contact-value">71-75 Shelton Street, Covent Garden<br>London, WC2H 9JQ, United Kingdom</div>
-            </div>
-          </div>
-
-          <div class="contact-item">
-            <div class="contact-icon">🏢</div>
-            <div class="contact-info-text">
-              <div class="contact-label" data-en="Company Number" data-tr="Şirket Numarası">Company Number</div>
-              <div class="contact-value">16778648</div>
-            </div>
-          </div>
-        </div>
-
-        <a href="mailto:contact@sermin.uk" class="cta-primary" data-en="Send Message" data-tr="Mesaj Gönder">Send Message</a>
       </div>
     </div>
   </section>
@@ -1114,34 +983,62 @@
   </footer>
 
   <script>
+    // Language Switcher
     let currentLang = 'en';
     
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const lang = btn.getAttribute('data-lang');
-        currentLang = lang;
-        
-        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        
-        document.querySelectorAll('[data-en]').forEach(el => {
-          const newText = (lang === 'en') ? el.getAttribute('data-en') : el.getAttribute('data-tr');
-          if (el.tagName === 'A' && el.href) {
-            const textNode = Array.from(el.childNodes).find(node => node.nodeType === 3);
-            if (textNode) {
-              textNode.textContent = newText;
-            } else {
-              el.textContent = newText;
-            }
-          } else {
-            el.textContent = newText;
-          }
-        });
-        
-        document.documentElement.lang = lang;
+    function switchLanguage(lang) {
+      console.log('Switching to:', lang);
+      currentLang = lang;
+      
+      // Update buttons
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.getAttribute('data-lang') === lang) {
+          btn.classList.add('active');
+        }
       });
+      
+      // Update all text elements
+      document.querySelectorAll('[data-en]').forEach(element => {
+        const enText = element.getAttribute('data-en');
+        const trText = element.getAttribute('data-tr');
+        
+        if (!enText || !trText) return;
+        
+        const newText = lang === 'en' ? enText : trText;
+        
+        // For links, only update text content
+        if (element.tagName === 'A') {
+          element.innerHTML = newText;
+        } else if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+          element.placeholder = newText;
+        } else if (element.tagName === 'LABEL' || element.tagName === 'BUTTON') {
+          element.textContent = newText;
+        } else {
+          element.textContent = newText;
+        }
+        
+        console.log('Updated:', element.tagName, newText);
+      });
+      
+      document.documentElement.lang = lang;
+      console.log('Language switched to:', lang);
+    }
+    
+    // Add click listeners
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          const lang = this.getAttribute('data-lang');
+          console.log('Button clicked:', lang);
+          switchLanguage(lang);
+        });
+      });
+      console.log('Language buttons initialized');
     });
 
+    // Smooth Scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
