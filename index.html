@@ -20,14 +20,16 @@
     :root {
       --navy: #0a0e1a;
       --navy-light: #111827;
-      --accent: #2563eb;
-      --accent-light: #3b82f6;
-      --accent-subtle: #1e40af;
-      --text: #f1f5f9;
+      --accent-blue: #3b82f6;
+      --accent-pink: #ec4899;
+      --accent-purple: #8b5cf6;
+      --text: #cbd5e1;
       --text-muted: #94a3b8;
+      --text-bright: #e2e8f0;
       --border: rgba(148, 163, 184, 0.15);
-      --white: #ffffff;
-      --glow: rgba(37, 99, 235, 0.2);
+      --white: #f1f5f9;
+      --glow-blue: rgba(59, 130, 246, 0.2);
+      --glow-pink: rgba(236, 72, 153, 0.2);
     }
 
     body {
@@ -109,15 +111,15 @@
     }
 
     .lang-btn:hover {
-      color: var(--accent-light);
-      background: rgba(37, 99, 235, 0.1);
-      border-color: var(--accent);
+      color: var(--accent-pink);
+      background: rgba(236, 72, 153, 0.1);
+      border-color: var(--accent-pink);
     }
 
     .lang-btn.active {
-      background: var(--accent);
-      color: var(--white);
-      border-color: var(--accent);
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-pink));
+      color: var(--text-bright);
+      border-color: transparent;
     }
 
     .hero {
@@ -132,12 +134,12 @@
       align-items: center;
       gap: 8px;
       padding: 10px 24px;
-      background: rgba(37, 99, 235, 0.08);
-      border: 1px solid rgba(37, 99, 235, 0.3);
+      background: rgba(236, 72, 153, 0.08);
+      border: 1px solid rgba(236, 72, 153, 0.3);
       border-radius: 50px;
       font-size: 13px;
       font-weight: 600;
-      color: var(--accent-light);
+      color: var(--accent-pink);
       margin-bottom: 30px;
       text-transform: uppercase;
       letter-spacing: 1px;
@@ -147,7 +149,7 @@
       content: '';
       width: 8px;
       height: 8px;
-      background: var(--accent);
+      background: var(--accent-pink);
       border-radius: 50%;
       animation: pulse 2s ease-in-out infinite;
     }
@@ -163,7 +165,7 @@
       font-weight: 900;
       line-height: 1.2;
       margin-bottom: 30px;
-      color: var(--white);
+      color: var(--text-bright);
       letter-spacing: -1px;
     }
 
@@ -179,20 +181,20 @@
     .cta-primary {
       display: inline-block;
       padding: 16px 40px;
-      background: var(--accent);
-      color: var(--white);
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-pink));
+      color: var(--text-bright);
       text-decoration: none;
       border-radius: 10px;
       font-weight: 700;
       font-size: 16px;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+      box-shadow: 0 4px 14px rgba(236, 72, 153, 0.4);
     }
 
     .cta-primary:hover {
-      background: var(--accent-light);
+      background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
+      box-shadow: 0 6px 20px rgba(236, 72, 153, 0.5);
     }
 
     .company-info {
@@ -220,12 +222,12 @@
 
     .info-value {
       font-size: 18px;
-      color: var(--white);
+      color: var(--text-bright);
       font-weight: 600;
     }
 
     .info-value.accent {
-      color: var(--accent-light);
+      color: var(--accent-pink);
     }
 
     .section {
@@ -243,7 +245,7 @@
     .section-label {
       font-size: 13px;
       font-weight: 700;
-      color: var(--accent);
+      color: var(--accent-pink);
       text-transform: uppercase;
       letter-spacing: 2px;
       margin-bottom: 20px;
@@ -254,7 +256,7 @@
       font-family: 'Playfair Display', serif;
       font-size: clamp(32px, 4vw, 52px);
       font-weight: 900;
-      color: var(--white);
+      color: var(--text-bright);
       margin-bottom: 20px;
       line-height: 1.2;
     }
@@ -267,15 +269,15 @@
 
     .services-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 30px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 25px;
     }
 
     .service-card {
       background: var(--navy-light);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 40px;
+      padding: 30px;
       transition: all 0.4s ease;
       position: relative;
       overflow: hidden;
@@ -288,7 +290,7 @@
       left: 0;
       width: 100%;
       height: 3px;
-      background: var(--accent);
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-pink), var(--accent-purple));
       transform: scaleX(0);
       transform-origin: left;
       transition: transform 0.4s ease;
@@ -299,34 +301,34 @@
     }
 
     .service-card:hover {
-      border-color: var(--accent);
+      border-color: var(--accent-pink);
       transform: translateY(-5px);
-      box-shadow: 0 10px 30px rgba(37, 99, 235, 0.15);
+      box-shadow: 0 10px 30px rgba(236, 72, 153, 0.2);
     }
 
     .service-icon {
-      width: 60px;
-      height: 60px;
-      background: var(--accent);
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-pink));
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 28px;
-      margin-bottom: 25px;
+      font-size: 24px;
+      margin-bottom: 20px;
     }
 
     .service-card h3 {
-      font-size: 22px;
-      color: var(--white);
-      margin-bottom: 15px;
+      font-size: 18px;
+      color: var(--text-bright);
+      margin-bottom: 12px;
       font-weight: 700;
     }
 
     .service-card p {
       color: var(--text-muted);
-      font-size: 15px;
-      line-height: 1.7;
+      font-size: 13px;
+      line-height: 1.6;
     }
 
     .projects-section {
@@ -359,26 +361,28 @@
     }
 
     .project-featured {
-      border: 2px solid var(--accent);
-      background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), transparent);
+      border: 2px solid var(--accent-pink);
+      background: transparent;
+      box-shadow: 0 0 30px rgba(236, 72, 153, 0.25);
     }
 
     .project-header {
-      padding: 40px;
-      background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), transparent);
+      padding: 25px;
+      background: transparent;
       border-bottom: 1px solid var(--border);
       position: relative;
     }
 
     .project-featured .project-header {
-      background: linear-gradient(135deg, rgba(37, 99, 235, 0.12), transparent);
+      background: transparent;
+      border-bottom: 1px solid rgba(236, 72, 153, 0.3);
     }
 
     .project-badge {
       display: inline-block;
       padding: 6px 16px;
-      background: var(--accent);
-      color: var(--white);
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-pink));
+      color: var(--text-bright);
       border-radius: 20px;
       font-size: 11px;
       font-weight: 700;
@@ -388,15 +392,26 @@
     }
 
     .project-badge.featured {
-      background: var(--accent);
+      background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+      box-shadow: 0 0 20px var(--glow-pink);
     }
 
     .project-card h3 {
       font-family: 'Playfair Display', serif;
       font-size: 32px;
       font-weight: 900;
-      color: var(--white);
+      color: var(--text-bright);
       margin-bottom: 12px;
+    }
+
+    .project-featured h3 {
+      font-size: 42px;
+      background: linear-gradient(135deg, #3b82f6, #ec4899, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 0 40px rgba(236, 72, 153, 0.5);
+      letter-spacing: 2px;
     }
 
     .project-tagline {
@@ -406,12 +421,12 @@
     }
 
     .project-body {
-      padding: 40px;
+      padding: 25px;
     }
 
     .project-description {
       color: var(--text-muted);
-      font-size: 15px;
+      font-size: 13px;
       line-height: 1.8;
       margin-bottom: 30px;
     }
@@ -456,7 +471,7 @@
       color: var(--accent-light);
       text-decoration: none;
       font-weight: 600;
-      font-size: 15px;
+      font-size: 13px;
       transition: all 0.3s ease;
     }
 
@@ -496,7 +511,7 @@
     .about-stats {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 30px;
+      gap: 20px;
     }
 
     .stat-box {
@@ -518,7 +533,7 @@
       font-family: 'Playfair Display', serif;
       font-size: 42px;
       font-weight: 900;
-      color: var(--accent-light);
+      color: var(--accent-pink);
       margin-bottom: 10px;
       display: block;
     }
@@ -567,7 +582,7 @@
 
     .value-content strong {
       display: block;
-      color: var(--white);
+      color: var(--text-bright);
       font-size: 16px;
       margin-bottom: 5px;
       font-weight: 700;
@@ -631,7 +646,7 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       color: var(--text);
-      font-size: 15px;
+      font-size: 13px;
       font-family: 'Inter', sans-serif;
       transition: all 0.3s ease;
     }
@@ -697,8 +712,8 @@
     }
 
     .contact-value {
-      color: var(--white);
-      font-size: 15px;
+      color: var(--text-bright);
+      font-size: 13px;
       font-weight: 600;
     }
 
@@ -723,7 +738,7 @@
       font-family: 'Playfair Display', serif;
       font-size: 28px;
       font-weight: 900;
-      color: var(--white);
+      color: var(--text-bright);
       margin-bottom: 30px;
     }
 
@@ -754,7 +769,7 @@
       }
 
       .company-info {
-        gap: 30px;
+        gap: 20px;
       }
     }
 
@@ -803,7 +818,7 @@
 
       .company-info {
         flex-direction: column;
-        gap: 30px;
+        gap: 20px;
       }
 
       .contact-box {
@@ -912,8 +927,8 @@
             <p class="project-tagline" data-en="The Next Generation Live Quiz" data-tr="Yeni Nesil Canlı Quiz">The Next Generation Live Quiz</p>
           </div>
           <div class="project-body">
-            <p class="project-description" data-en="VibraXX is the world's number one educational and award-winning live quiz platform. Powered by advanced AI technology, it delivers 2 million high-quality questions across 15 categories with real-time competitions and £1000 monthly prize pools." data-tr="VibraXX, dünyanın bir numaralı eğitsel ve ödüllü canlı quiz platformudur. Gelişmiş AI teknolojisi ile güçlendirilmiş, 15 kategoride 2 milyon yüksek kaliteli soru, gerçek zamanlı yarışmalar ve £1000 aylık ödül havuzları sunar.">
-              VibraXX is the world's number one educational and award-winning live quiz platform. Powered by advanced AI technology, it delivers 2 million high-quality questions across 15 categories with real-time competitions and £1000 monthly prize pools.
+            <p class="project-description" data-en="VibraXX is an innovative educational live quiz platform. Powered by advanced AI technology, it delivers 2 million high-quality questions across 15 categories with real-time competitions and £1000 monthly prize pools." data-tr="VibraXX, yenilikçi bir eğitsel canlı quiz platformudur. Gelişmiş AI teknolojisi ile güçlendirilmiş, 15 kategoride 2 milyon yüksek kaliteli soru, gerçek zamanlı yarışmalar ve £1000 aylık ödül havuzları sunar.">
+              VibraXX is an innovative educational live quiz platform. Powered by advanced AI technology, it delivers 2 million high-quality questions across 15 categories with real-time competitions and £1000 monthly prize pools.
             </p>
             <ul class="project-features">
               <li data-en="AI-generated questions using advanced technology" data-tr="Gelişmiş teknoloji kullanarak AI üretimli sorular">AI-generated questions using advanced technology</li>
@@ -974,7 +989,7 @@
         71-75 Shelton Street, Covent Garden, London, WC2H 9JQ, United Kingdom
       </div>
       <div class="footer-info">
-        <a href="mailto:contact@sermin.uk" style="color: var(--accent-light); text-decoration: none;">contact@sermin.uk</a>
+        <a href="mailto:contact@sermin.uk" style="color: var(--accent-pink); text-decoration: none;">contact@sermin.uk</a>
       </div>
       <div class="footer-copyright">
         © 2025 Sermin Limited. <span data-en="All rights reserved." data-tr="Tüm hakları saklıdır.">All rights reserved.</span>
@@ -983,79 +998,43 @@
   </footer>
 
   <script>
-    // Language Switcher
-    let currentLang = 'en';
-    
-    function switchLanguage(lang) {
-      console.log('Switching to:', lang);
-      currentLang = lang;
-      
-      // Update buttons
-      document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.getAttribute('data-lang') === lang) {
-          btn.classList.add('active');
-        }
-      });
-      
-      // Update all text elements
-      document.querySelectorAll('[data-en]').forEach(element => {
-        const enText = element.getAttribute('data-en');
-        const trText = element.getAttribute('data-tr');
+    // DİL BUTONU - ÇALIŞIR VERSİYON
+    document.querySelectorAll('.lang-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var lang = this.getAttribute('data-lang');
         
-        if (!enText || !trText) return;
+        // Button active durumu
+        document.querySelectorAll('.lang-btn').forEach(function(b) {
+          b.classList.remove('active');
+        });
+        this.classList.add('active');
         
-        const newText = lang === 'en' ? enText : trText;
-        
-        // For links, only update text content
-        if (element.tagName === 'A') {
-          element.innerHTML = newText;
-        } else if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-          element.placeholder = newText;
-        } else if (element.tagName === 'LABEL' || element.tagName === 'BUTTON') {
-          element.textContent = newText;
-        } else {
-          element.textContent = newText;
-        }
-        
-        console.log('Updated:', element.tagName, newText);
-      });
-      
-      document.documentElement.lang = lang;
-      console.log('Language switched to:', lang);
-    }
-    
-    // Add click listeners
-    document.addEventListener('DOMContentLoaded', function() {
-      document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-          e.preventDefault();
-          const lang = this.getAttribute('data-lang');
-          console.log('Button clicked:', lang);
-          switchLanguage(lang);
+        // Tüm metinleri değiştir
+        document.querySelectorAll('[data-en][data-tr]').forEach(function(el) {
+          var enText = el.getAttribute('data-en');
+          var trText = el.getAttribute('data-tr');
+          var newText = (lang === 'en') ? enText : trText;
+          el.textContent = newText;
         });
       });
-      console.log('Language buttons initialized');
     });
-
-    // Smooth Scroll
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      });
-    });
-
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+    
+    // Animasyon
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
         if (entry.isIntersecting) {
           entry.target.style.opacity = '1';
-          
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    document.querySelectorAll('.service-card, .project-card, .stat-box').forEach(function(el) {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
